@@ -1,0 +1,124 @@
+
+/*  h1{
+    text-transform: uppercase;
+   
+    display: flexbox;
+    color: black;
+    text-align: center; 
+    text-shadow: -2px -2px 0 #0000004f
+  
+ } */
+
+input {
+    display: inline; 
+   
+    position: relative;
+    margin-right: 10px;
+   
+ }
+/*  label{
+    display: block;
+    margin-right: 10px;
+   
+   
+
+ } */
+ p{
+   
+   
+    font-style: italic;
+    font-weight: bold;
+ }
+ 
+ .identifient{
+ width: auto;
+ background-color: white;
+   border: 1px solid rgb(11, 52, 218);
+   margin: 10px;
+   
+ }
+.tableSuivi{
+   border-collapse: collapse; 
+   min-width: 400px;
+   width: auto;
+   box-shadow: 0 5px rgb(0, 0, 0,15);
+   margin: 30px auto;
+   border: 2px solid midnightblue;
+
+}
+thead tr{
+    background-color: midnightblue;
+    color: #fff;
+    text-align: left;
+}
+th,td{
+    padding: 15px 20px;
+}
+tbody tr,td,th{
+    border: 1px solid #ddd;
+}
+tr{
+    border: 1px solid #ddd;
+}
+
+form{
+    background-color: white;
+}
+h2{
+    text-align: left;
+    text-decoration: underline ;
+    color: blue;
+    
+   
+}
+h3{
+    text-align: left;
+    text-decoration: underline;
+    color: blue;
+}
+
+.accueil{
+
+    margin: 10px ;
+    margin-bottom: 30px;
+    
+
+}
+/* .bouton{
+   position: relative;
+   left: 360px;
+   bottom: 50px; 
+   color: red;
+   padding: 5px 5px;
+   border-radius: 23px;
+} */
+
+.retour{
+
+    position: relative;
+    left: 400px;
+   
+    
+}
+.ajouterChmaps{
+
+    position: relative;
+    left: 450px;
+    margin-bottom: 10px;
+    padding: 6px;
+    width: max-content;
+    
+}
+.inegration{
+    background-color: white ;
+    width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    
+    /* background-color:rgba(rgb(36, 99, 206), rgb(15, 83, 186), blue, alpha) */
+}
+/* .flexData  {
+padding: 1px;
+display: list-item;
+} */
+

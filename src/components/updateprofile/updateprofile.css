@@ -1,0 +1,15 @@
+.updateprofile-component{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-bottom: 5rem;
+    background-image: url('../../images/Circuit\ imprimé\ v4\ vertical.png');
+    background-position: 100% 100%;
+    background-size: 9%;
+    background-repeat: no-repeat;
+}

@@ -1,0 +1,98 @@
+.dashboard-component{
+    /* height:100vh; */
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-content {
+    margin-bottom: 7rem;
+}
+
+.tab-content{
+    height:100%;
+}
+
+.new-doc-button{
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    height: 60px;
+    width: 200px;
+    z-index: 1;
+}
+
+.new-doc-button2{
+    position: fixed;
+    bottom: 110px;
+    right: 40px;
+    height: 60px;
+    width: 200px;
+    z-index: 1;
+}
+
+.new-doc-button2 svg{
+    margin-top: 1px;
+}
+
+.new-doc-button svg{
+    margin-top: 1px;
+}
+
+h1 {
+    margin: 1.5rem !important;
+    text-transform: none !important;
+    text-shadow: none !important;
+}
+
+.no-content{
+    color: #01487C !important;
+    text-decoration: none !important;
+    width: 100%;
+    text-align: center;
+}
+
+.swiper {
+    width: 96%;
+    height: 100%;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+    z-index: 0 !important;
+}
+
+.swiper-slide {
+    
+}
+
+.swiper-button-next {
+    color: #01487C !important;
+    right: 0px !important;
+}
+
+.swiper-button-prev {
+    color: #01487C !important;
+}
+
+/* .swiper-button-next2, .swiper-button-prev2 {
+    color: #01487C !important;
+    top: 10%;
+    right: 0px;
+} */
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+    background: #01487C;
+}
+
+.filter {
+    text-align: center;
+    margin-top: 1rem;
+    margin-bottom: 10px;
+}
+
+.filter span {
+    color: #01487C;
+}
+
+.icon-filter {
+    width: 30px !important;
+    height: 30px !important;
+}

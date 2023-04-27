@@ -1,0 +1,47 @@
+h3{
+    color: white !important;
+}
+
+span{
+    color: white;
+}
+
+.navbar{
+    display: block !important;
+    border-radius: 0% 0% 20px 20px;
+    background-image: url('../../images/Circuit\ imprimé\ v3.png');
+    background-position: 0% 100%;
+    background-size: 30%;
+    background-repeat: no-repeat;
+}
+
+.user-profil {
+    text-align: center !important;
+    text-decoration: none;
+}
+
+.dashImg{
+    width: 30%;
+    margin-bottom: 0px !important;
+}
+
+.navbar-collapse {
+    flex-grow: 0  !important;
+}
+
+.container{
+    padding: 0px !important;
+}
+
+.dropdown {
+    padding-left: 80%;
+}
+
+.dropdown-menu.show {
+    margin-left: 85% !important;
+}
+
+.col-nav {
+    width: 33.3%;
+    text-align: center;
+}

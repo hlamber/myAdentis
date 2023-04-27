@@ -1,0 +1,61 @@
+.card h4 {
+    margin-bottom: 20px;
+}
+
+.blockquote-footer::before {
+    content: none !important;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    float: right;
+    margin-top: 10px !important;
+    margin-left: 10px !important;
+    margin-right: 10px !important;
+}
+
+.icon-delete {
+    background-color: #E1895D !important;
+    border-color: #E1895D !important;
+}
+
+.icon-relance {
+    background-color: #E1895D !important;
+    border-color: #E1895D !important;
+    bottom: 0px !important;
+}
+
+.icon-send {
+    background-color: #7FAB74 !important;
+    border-color: #7FAB74 !important;
+}
+
+button:hover {
+    opacity: 0.5 !important;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    margin-left: -8px;
+    margin-top: -10px;
+}
+
+.title-modal {
+    width: 100%;
+}
+
+.btn-modal {
+    float: right;
+    width: 35%;
+    /* display:block; */
+}
+
+.row-modal {
+    margin: 10px;
+}
+
+.row-modal input {
+    margin: 5px;
+}

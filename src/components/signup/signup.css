@@ -1,0 +1,14 @@
+.signup-component{
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    padding-bottom: 5rem;
+    background-image: url('../../images/Circuit\ imprimé\ v3\ vertical.png');
+    background-size: 8%;
+    background-repeat: no-repeat;
+}
