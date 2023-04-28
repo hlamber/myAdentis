@@ -76,9 +76,12 @@ const AddFeilds = (props) => {
           <option value="sous section">sous section</option>
           <option value="texte simple">texte simple</option>
           <option value="texte long">texte long</option>
+          <option value="indication">indication</option>
           <option value="choix simple">choix simple</option>
           <option value="choix multiples">choix multiples</option>
           <option value="tableau">tableau</option>
+          <option value="tableau historique">tableau historique</option>
+          <option value="tableau projet">tableau projet</option>
           <option value="tableau d'appreciation">tableau d'appreciation</option>
           <option value="notation">notation</option>
         </select>
@@ -110,14 +113,6 @@ const AddFeilds = (props) => {
               value={colonnesTableauInformations}
               defaultValue={props.champ !== undefined ? props.champ.colonnesTableauInformations.join("-") : ""}
             />
-            {/* <input 
-              type="number" 
-              value={nbRow}
-              defaultValue={props.champ !== undefined ? props.champ.nbRow.join("-") : ""}
-              onChange={(e) => {
-                setNbRow(e.target.value);
-              }}
-            /> */}
           </>
           : <></>
         }

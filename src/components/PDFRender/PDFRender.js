@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
 export default function PDFRender({data, reponses}){  
   
-  function renderSwitch(param, intitule, position, propositionDeReponse, criteresAppreciation){
+  function renderSwitch(param, intitule, position, propositionDeReponse, criteresAppreciation, colonnesTableauInformations){
     switch(param) {
       case 'section':
         return (
@@ -149,6 +149,13 @@ export default function PDFRender({data, reponses}){
             </>
           )
         }
+      case "tableau":
+        return (
+          <>
+            <Text>{intitule} : </Text>
+            <TableFormation data={colonnesTableauInformations} type={param} res={reponses.find(r => r.positionChamp === position)}/>
+          </>
+        );
       case "tableau d'appreciation":
         return (
           <>
@@ -200,8 +207,9 @@ export default function PDFRender({data, reponses}){
         fieldsToDisplay = data.slice(1, data.length);
         break;
       case "bilan-intermediaire":
-        fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "situation actuelle")), data.indexOf(data.find((field) => field.intitule === "Formation 1")));
-        fieldsToDisplay2 = data.slice(data.indexOf(data.find((field) => field.intitule === "En quoi te permettraient-elles d'atteindre ton projet professionnel ?")), data.length);
+        fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "situation actuelle")), data.length);
+        // fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "situation actuelle")), data.indexOf(data.find((field) => field.intitule === "Formation 1")));
+        // fieldsToDisplay2 = data.slice(data.indexOf(data.find((field) => field.intitule === "En quoi te permettraient-elles d'atteindre ton projet professionnel ?")), data.length);
         break;
     }
   }
@@ -252,18 +260,18 @@ export default function PDFRender({data, reponses}){
               {fieldsToDisplay.map((field, index) => {
                 return (
                   <>
-                    {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation)}
+                    {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation, field.colonnesTableauInformations)}
                   </>
                 )
               })}
-              <TableFormation data={data} reponses={reponses}></TableFormation>
+              {/* <TableFormation data={data} reponses={reponses}></TableFormation>
               {fieldsToDisplay2.map((field, index) => {
                 return (
                   <>
                     {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation)}
                   </>
                 )
-              })}
+              })} */}
             </View>
           </>        
         )

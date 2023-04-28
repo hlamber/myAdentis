@@ -22,6 +22,8 @@ export default function DataUpdateData({data}) {
     const [find2, setFind2] = useState(false)
     var { id } = useParams()
     var propAppreciation = ["Pas du tout satisfaisant", "Peu satisfaisant", "Moyennement satisfaisant", "Satisfaisant", "Très satisfaisant"]
+    var tabHistorique = ["Client", "Poste", "Débuté il y a combien de mois (chiffre uniquement)", "Durée en mois (chiffre uniquement)"]
+    var tabProjet = ["Client", "Durée", "Missions réalisées", "Comment as-tu perçu cette expérience ?"]
     var action = ""
     let MathScore = [];
 
@@ -119,7 +121,7 @@ export default function DataUpdateData({data}) {
             data.dateDeSoumission = date
             await updateSoumission(data, id)
         }
-        // window.location.href="/"
+        window.location.href="/"
     }
 
     async function handleChange(index, value, isCheck, numRow, numCol, tabLength){
@@ -246,6 +248,8 @@ export default function DataUpdateData({data}) {
             return <h1 className="section" key={index}>{input.intitule} </h1>;
         case "sous section":
             return <h2 className="sous-section" key={index}>{input.intitule} </h2>;
+        case "indication":
+            return <h2 className="indication" key={index}>{input.intitule} </h2>;
         case "texte simple":
             return (
             <div key={index}>
@@ -347,6 +351,74 @@ export default function DataUpdateData({data}) {
                             </>
                           ))}
                         </tr>
+                        ))}
+                    </table>
+                </>
+            );
+        case "tableau historique":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes
+            }
+            var convertRes = res.split(";").map(pair => pair.split("-")); 
+            return(
+                <>
+                    <label className="intitule">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                        <tr>
+                            {tabHistorique.map((criteres) => (
+                                <>
+                                    <th>{criteres}</th>
+                                </>
+                            ))}
+                        </tr>
+                        {[...Array(4)].map((row, numRow) => (
+                            <tr>
+                                {tabHistorique.map((col, numCol) => (
+                                    <>
+                                        <th>
+                                            {convertRes.find(r => r.length !== 1 )
+                                                ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                                : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, tabHistorique.length)}}/>
+                                            }
+                                        </th>
+                                    </>
+                                ))}
+                            </tr>
+                        ))}
+                    </table>
+                </>
+            );
+        case "tableau projet":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes
+            }
+            var convertRes = res.split(";").map(pair => pair.split("-")); 
+            return(
+                <>
+                    <label className="intitule">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                        <tr>
+                            {tabProjet.map((criteres) => (
+                                <>
+                                    <th>{criteres}</th>
+                                </>
+                            ))}
+                        </tr>
+                        {[...Array(3)].map((row, numRow) => (
+                            <tr>
+                                {tabProjet.map((col, numCol) => (
+                                    <>
+                                        <th>
+                                            {convertRes.find(r => r.length !== 1 )
+                                                ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                                : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, tabProjet.length)}}/>
+                                            }
+                                        </th>
+                                    </>
+                                ))}
+                            </tr>
                         ))}
                     </table>
                 </>
