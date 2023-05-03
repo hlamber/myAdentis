@@ -183,7 +183,7 @@ export default function Dashboard() {
                 <option value="suivi-integration-6-mois">Suivi d’intégration à 6 mois</option>
                 <option value="pap">Point Avancement Projet (PAP)</option>
                 <option value="pmp">Point Mensuel Projet (PMP)</option>
-                <option value="bilan-professionnel">Bilan professionnel</option>
+                <option value="fessionnel">Bilan professionnel</option>
                 <option value="bilan-annuel">Bilan annuel</option>
                 <option value="bilan-intermediaire">Bilan intermédiaire</option>
                 </select>

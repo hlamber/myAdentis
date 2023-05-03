@@ -5,39 +5,23 @@ import { colors } from '@mui/material';
 
 const styles = StyleSheet.create({
     table: {
-        // width: '100%',
         margin: '10px',
       },
       row: {
         display: 'flex',
         flexDirection: 'row',
-        // border: '1px solid black',
       },
       header: {
-        // borderTop: 'none',
       },
       bold: {
         fontWeight: 'bold',
       },
-      // So Declarative and unDRY 👌
       row1: {
         width: '30%',
         border: '1px solid black',
         padding: 5,
         textAlign: 'center',
         fontFamily: 'Avenir', 
-      },
-      row2: {
-        width: '20%',
-      },
-      row3: {
-        width: '20%',
-      },
-      row4: {
-        width: '20%',
-      },
-      row5: {
-        width: '20%',
       },
       table_title: {
         textAlign: 'center',
@@ -99,7 +83,7 @@ export default function TableAppreciation({data, type, res}) {
                                   : <Text style={styles.row1}></Text>
                                 }
                               </>
-                            : <></>
+                            : <Text style={styles.row1}></Text>
                           }
                         </>
                       ))}

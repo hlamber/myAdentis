@@ -11,6 +11,8 @@ import TableNotation from './TableNotation';
 import TablePMP from './TablePMP';
 import LogoCooptation from "../../images/logo-cooptation.png";
 import TableFormation from './TableFormation';
+import TableProjet from './TableProjet';
+import TableHistorique from './TableHistorique';
 
 Font.register({
   family: 'Avenir',
@@ -57,6 +59,12 @@ const styles = StyleSheet.create({
     textAlign: "left",
     textDecoration: "underline"
   },
+  indication: {
+    fontSize: "9px",
+    textAlign: "left",
+    // fontStyle: "italic",
+    fontFamily: "Avenir",
+  },
   sectionPAP: {
     backgroundColor: "#01487C",
     color: "white",
@@ -82,6 +90,13 @@ const styles = StyleSheet.create({
     marginLeft: "-6%",
     marginRight: "-6%",
   },
+  sectionBA: {
+    backgroundColor: "#01487C",
+    color: "white",
+    fontSize: "20px",
+    fontFamily: "Avenir", 
+    textAlign: "center"
+  },
   rep: {
     fontFamily: 'Avenir', 
   },
@@ -94,19 +109,28 @@ export default function PDFRender({data, reponses}){
   function renderSwitch(param, intitule, position, propositionDeReponse, criteresAppreciation, colonnesTableauInformations){
     switch(param) {
       case 'section':
-        return (
-          <>
-            {reponses[0].champ.document.slug === "pap"
-              ? <Text style={styles.sectionPAP2}>{intitule.toUpperCase()}</Text>
-              : <Text style={styles.section}>{intitule.toUpperCase()}</Text>
-            }
-          </>
-          
-        );
+        switch(reponses[0].champ.document.slug){
+          case "pap" :
+            return (<Text style={styles.sectionPAP2}>{intitule.toUpperCase()}</Text>)
+            break;
+          case "bilan-annuel" :
+            return (<Text style={styles.sectionBA}>{intitule.toUpperCase()}</Text>)
+            break;
+          default: 
+            return(<Text style={styles.section}>{intitule.toUpperCase()}</Text>)
+            break;
+        }
       case 'sous section':
         return (
           <>
             <Text style={styles.sousSection}>{intitule}</Text>
+            <Text>{"\n"}</Text>
+          </>    
+        );
+      case 'indication':
+        return (
+          <>
+            <Text style={styles.indication}>{intitule}</Text>
             <Text>{"\n"}</Text>
           </>    
         );
@@ -154,6 +178,20 @@ export default function PDFRender({data, reponses}){
           <>
             <Text>{intitule} : </Text>
             <TableFormation data={colonnesTableauInformations} type={param} res={reponses.find(r => r.positionChamp === position)}/>
+          </>
+        );
+      case "tableau projet":
+        return (
+          <>
+            <Text>{intitule} : </Text>
+            <TableProjet type={param} res={reponses.find(r => r.positionChamp === position)}/>
+          </>
+        );
+      case "tableau historique":
+        return (
+          <>
+            <Text>{intitule} : </Text>
+            <TableHistorique type={param} res={reponses.find(r => r.positionChamp === position)}/>
           </>
         );
       case "tableau d'appreciation":
@@ -208,8 +246,12 @@ export default function PDFRender({data, reponses}){
         break;
       case "bilan-intermediaire":
         fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "situation actuelle")), data.length);
-        // fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "situation actuelle")), data.indexOf(data.find((field) => field.intitule === "Formation 1")));
-        // fieldsToDisplay2 = data.slice(data.indexOf(data.find((field) => field.intitule === "En quoi te permettraient-elles d'atteindre ton projet professionnel ?")), data.length);
+        break;
+      case "bilan-annuel":
+        fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "introduction")), data.length);
+        break;
+      case "bilan-professionnel":
+        fieldsToDisplay = data.slice(data.indexOf(data.find((field) => field.intitule === "bilan du parcours professionnel de la période écoulée")), data.length);
         break;
     }
   }
@@ -264,14 +306,40 @@ export default function PDFRender({data, reponses}){
                   </>
                 )
               })}
-              {/* <TableFormation data={data} reponses={reponses}></TableFormation>
-              {fieldsToDisplay2.map((field, index) => {
+            </View>
+          </>        
+        )
+        break;
+      case "bilan-annuel":
+        return(
+          <>
+            <Image src={logo} style={styles.logo} fixed />
+            <RenderCouverture document={document} reponses={reponses}></RenderCouverture>
+            <View break>
+              {fieldsToDisplay.map((field, index) => {
                 return (
                   <>
-                    {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation)}
+                    {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation, field.colonnesTableauInformations)}
                   </>
                 )
-              })} */}
+              })}
+            </View>
+          </>        
+        )
+        break;
+      case "bilan-professionnel":
+        return(
+          <>
+            <Image src={logo} style={styles.logo} fixed />
+            <RenderCouverture document={document} reponses={reponses}></RenderCouverture>
+            <View break>
+              {fieldsToDisplay.map((field, index) => {
+                return (
+                  <>
+                    {renderSwitch(field.type, field.intitule, field.position, field.propositionDeReponse, field.criteresAppreciation, field.colonnesTableauInformations)}
+                  </>
+                )
+              })}
             </View>
           </>        
         )

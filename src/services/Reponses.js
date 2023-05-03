@@ -1,7 +1,6 @@
 const reponses_url = `${process.env.REACT_APP_BASE_URL}`
 
 export function createReponse(data){
-    console.log(data)
     return fetch(`${reponses_url}/api/Reponses`, {
         method: "POST",
         headers: {

@@ -415,7 +415,7 @@ export default function Data({}) {
   const renderInput = (input, index) => {
     switch (input.type) {
       case "section":
-        return <h1 className="section" key={index}>{input.intitule} </h1>;
+        return <h1 className="section" key={index}>{input.intitule}</h1>;
       case "sous section":
         return <h2 className="sous-section" key={index}>{input.intitule} </h2>;
       case "indication":

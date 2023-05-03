@@ -42,7 +42,6 @@ const data =
 const RenderCouverture = ({document, reponses}) => {
   var infosGenerales = [];
   // recuperation des champs/reponses de la partie informations generales en fonction du type du document
-  //console.log(reponses);
   switch(document.slug){
     case "suivi-integration-1-mois":
       infosGenerales = reponses.slice(1, reponses.indexOf(reponses.find((rep) => rep.champ.intitule === "retour à froid sur le recrutement")));

@@ -63,6 +63,10 @@ export default function DataUpdateData({data}) {
         var d = new Date()
         var date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+"T"+d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
+        //TODO parcourir uniquement les champs créés ou modifiés temps de chargement trop long
+
+        console.log(defaultRes)
+
         for(var r in defaultRes){
 
             var missingElement1 = defaultRes[r].soumission.document.champs
@@ -75,7 +79,6 @@ export default function DataUpdateData({data}) {
             }
 
             if(defaultRes[r].id === undefined){
-                console.log('bjkbjkkjk')
                 if(defaultRes[r].champ.type === "choix multiples" || defaultRes[r].champ.type === "choix simple"){
                     var convert = defaultRes[r].champ.propositionDeReponse
                     defaultRes[r].champ.propositionDeReponse = convert.join("-")
@@ -88,20 +91,23 @@ export default function DataUpdateData({data}) {
                     }
                     defaultRes[r].intitule = convert
                 }
-                if(defaultRes[r].champ.type === "tableau"){
-                    var convert = ""
-                    var convert2 = ""
-                    for(var t in defaultRes[r].intitule){
-                        convert = defaultRes[r].intitule[t].join('-')
-                        defaultRes[r].intitule[t] = convert
+                if(defaultRes[r].champ.type === "tableau" || defaultRes[r].champ.type === "tableau historique" || defaultRes[r].champ.type === "tableau projet"){
+
+                    if(typeof defaultRes[r].intitule === "object"){
+                        var convert = ""
+                        var convert2 = ""
+                        for(var t in defaultRes[r].intitule){
+                            convert = defaultRes[r].intitule[t].join('-')
+                            defaultRes[r].intitule[t] = convert
+                        }
+                        convert2 = defaultRes[r].intitule.join(";")
+                        defaultRes[r].intitule = convert2
                     }
-                    convert2 = defaultRes[r].intitule.join(";")
-                    defaultRes[r].intitule = convert2
                 }
                 await createReponse(defaultRes[r])
             }
             else {
-                if(defaultRes[r].champ.type === "tableau"){
+                if(defaultRes[r].champ.type === "tableau" || defaultRes[r].champ.type === "tableau historique" || defaultRes[r].champ.type === "tableau projet"){
                     if(typeof defaultRes[r].intitule === "object"){
                         var convert = ""
                         var convert2 = ""
@@ -127,6 +133,7 @@ export default function DataUpdateData({data}) {
     async function handleChange(index, value, isCheck, numRow, numCol, tabLength){
 
         const result = defaultRes
+        var nbRow = 0
         
         for(var c in dataFeilds ){
             dataFeilds[c].document = {}   
@@ -153,16 +160,26 @@ export default function DataUpdateData({data}) {
                 newVal.intitule = []
                 newVal.intitule[value.name] = value.value
             }
-            if(dataFeilds[index].type === "tableau"){
-                newVal.intitule = new Array(3)
-                for (i=0; i < 3; i++){
+            if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){
+                switch (dataFeilds[index].type) {
+                    case "tableau":
+                    case "tableau projet":
+                        newVal.intitule = new Array(3)
+                        nbRow = 3
+                        break;
+                    case "tableau historique":
+                        newVal.intitule = new Array(4)
+                        nbRow = 4
+                        break;
+                }
+                for (i=0; i < nbRow; i++){
                     var myArray = new Array(tabLength)
                     for(t=0; t < tabLength; t++){
                         myArray[t] = ""
                     }
                     newVal.intitule[i] = myArray
                 }
-                newVal.intitule[numRow][numCol-1] = value
+                newVal.intitule[numRow][numCol] = value
             }
             defaultRes.push(newVal)
         } 
@@ -173,9 +190,19 @@ export default function DataUpdateData({data}) {
                     newVal.intitule = []
                     newVal.intitule[value.name] = value.value
                 }
-                if(dataFeilds[index].type === "tableau"){
-                    newVal.intitule = new Array(3)
-                    for (var i=0; i < 3; i++){
+                if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){
+                    switch (dataFeilds[index].type) {
+                        case "tableau":
+                        case "tableau projet":
+                            newVal.intitule = new Array(3)
+                            nbRow = 3
+                            break;
+                        case "tableau historique":
+                            newVal.intitule = new Array(4)
+                            nbRow = 4
+                            break;
+                    }
+                    for (var i=0; i < nbRow; i++){
                         var myArray = new Array(tabLength)
                         for(t=0; t < tabLength; t++){
                             myArray[t] = ""
@@ -199,8 +226,7 @@ export default function DataUpdateData({data}) {
                         defaultRes[objIndex].intitule = defaultRes[objIndex].intitule + "-" + value
                     }
                 }
-                else if(dataFeilds[index].type === "tableau"){ 
-                    console.log(typeof defaultRes[objIndex].intitule)  
+                else if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){ 
                     if(typeof defaultRes[objIndex].intitule === "object"){
                         defaultRes[objIndex].intitule[numRow][numCol] = value
                     } 
@@ -208,8 +234,6 @@ export default function DataUpdateData({data}) {
                         var convertRes = defaultRes[objIndex].intitule.split(";").map(pair => pair.split("-")); 
                         defaultRes[objIndex].intitule = convertRes
                     }
-                    // console.log(defaultRes[objIndex].intitule) 
-                    // defaultRes[objIndex].intitule[numRow][numCol] = value
                 }
                 else if(dataFeilds[index].type === "tableau d'appreciation"){
                     if(typeof defaultRes[objIndex].intitule === "object"){
@@ -238,7 +262,6 @@ export default function DataUpdateData({data}) {
                 }
             }   
         }
-        console.log(defaultRes)
     }
        
     // affichage des champs

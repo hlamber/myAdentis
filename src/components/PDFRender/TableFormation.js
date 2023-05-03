@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
 
 export default function TableFormation({data, res}) {
 
-    var convertRes = res.intitule.split(";").map(pair => pair.split("-")); 
-
-    console.log(convertRes)
-
+    var convertRes = ""
+    if(res !== undefined){
+      convertRes = res.intitule.split(";").map(pair => pair.split("-")); 
+    }
+    
     return (
         <>
         <View style={styles.table}>
@@ -55,12 +56,13 @@ export default function TableFormation({data, res}) {
             </View>
             {[...Array(3)].map((row, numRow) => (
                 <View style={styles.row} wrap={false}>
-                    {/* {convertRes !=} */}
-                    {[...Array(data.length)].map((row, numRow) => (
+                    {[...Array(data.length)].map((col, numCol) => (
                         <>
-                            {console.log(convertRes[numRow])}
-                            {/* {console.log(convertRes.find((res) => res[2]))} */}
-                            <Text style={styles.row1}>fefefe</Text>
+                            {convertRes.length !== 1 && convertRes.length !== 0
+                              ? <Text style={styles.row1}>{convertRes[numRow][numCol]}</Text>
+                              : <Text style={styles.row1}></Text>
+                            }
+                            
                         </>
                     ))}
                 </View>
