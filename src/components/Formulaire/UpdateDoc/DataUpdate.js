@@ -446,52 +446,6 @@ export default function DataUpdateData({data}) {
                     </table>
                 </>
             );
-        case "tableau d'appreciation":
-            var res = ""
-            if(defaultRes !== undefined){
-                res = defaultRes + ''
-            }
-            var convertRes = res.split("-").map(pair => pair.split(":")); 
-            if(convertRes.slice(-1)[0] === ""){
-                convertRes.pop()
-            }
-                var convert = input.colonnesTableauInformations + ''
-                var value = convert.split("-")
-                if(value.length > 1){
-                    input.colonnesTableauInformations = value
-                }
-                return(
-                    <>
-                        <div className="col-sm-10 mx-sm-auto ">
-                            <label className="intitule mb-3">{input.intitule} : </label>
-                            <div className="table-responsive">
-                                <table className="tableau-appreciation">
-                                    <tr>
-                                        {input.colonnesTableauInformations.map((criteres) => (
-                                            <>
-                                                <th>{criteres}</th>
-                                            </>
-                                        ))}
-                                    </tr>
-                                    {[...Array(3)].map((row, numRow) => (
-                                        <tr>
-                                            {input.colonnesTableauInformations.map((col, numCol) => (
-                                                <>
-                                                    <th>
-                                                        {convertRes.find(r => r.length !== 1)
-                                                            ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length) }} />
-                                                            : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length) }} />
-                                                        }
-                                                    </th>
-                                                </>
-                                            ))}
-                                        </tr>
-                                    ))}
-                                </table>
-                            </div>
-                        </div>
-                    </>
-                );
             case "tableau d'appreciation":
                 var res = ""
                 if(defaultRes !== undefined){
