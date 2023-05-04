@@ -28,8 +28,8 @@ export default function DocumentCard({id, title, type}) {
                 <blockquote className="blockquote mb-0" style={{ fontSize: "1em" }}>
                 <p>{title}</p>
                 <footer className="blockquote-footer" >
-                    <Button className='icon' type="button" onClick={() => openDetailModal()}><Icon.PencilSquare/></Button>
-                    <Button className='icon icon-send' type="button" onClick={() => openSendModal()}><Icon.SendFill/></Button>
+                    <Button className='icon' type="button" title="Ouvrir" onClick={() => openDetailModal()}><Icon.PencilSquare/></Button>
+                          <Button className='icon icon-send' title="Envoyer" type="button" onClick={() => openSendModal()}><Icon.SendFill /></Button>
                 </footer>
                 </blockquote>
             </Card.Body>

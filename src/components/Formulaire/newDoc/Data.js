@@ -415,25 +415,26 @@ export default function Data({}) {
   const renderInput = (input, index) => {
     switch (input.type) {
       case "section":
-        return <h1 className="section" key={index}>{input.intitule}</h1>;
-      case "sous section":
-        return <h2 className="sous-section" key={index}>{input.intitule} </h2>;
-      case "indication":
-        return <h2 className="indication" key={index}>{input.intitule} </h2>;
+            return <h1 className="section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h1>;
+        case "sous section":
+            return <h2 className="sous-section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
+        case "indication":
+            return <h2 className="indication col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
       case "texte simple":
         return (
-          <div key={index}>
-            <label className="intitule">{input.intitule} : </label>
-            {input.estObligatoire
-              ? <input type={input.type} required/>
-              : <input type={input.type} />
-            }
+            <div className="col-sm-10 mx-sm-auto" key={index}>
+                <label className="intitule">{input.intitule} : </label>
+                {input.estObligatoire
+                    ? <input  type={input.type} required />
+                    : <input  type={input.type} />
+                }
+         
           </div>
         );
       case "texte long":
         return (
-          <div className="textarea" key={index}>
-            <label className="intitule">{input.intitule} :</label>
+            <div className="textarea col-sm-10 mx-sm-auto" key={index}>
+                <label className="intitule  mb-1">{input.intitule} :</label>
             <textarea rows="3"></textarea>
           </div>
         );
@@ -444,11 +445,11 @@ export default function Data({}) {
           input.propositionDeReponse = value
         }
         return (
-          <div key={index}>
+            <div className="col-sm-10 mx-sm-auto" key={index}>
             <label className="intitule">{input.intitule} : </label>
             {input.propositionDeReponse.map((valeur, i) => (
-              <label>
-                <input type="checkbox" />
+                <label>
+                    <input className="mx-2" type="checkbox" />
                 {valeur}
               </label>
             ))}
@@ -461,14 +462,16 @@ export default function Data({}) {
           input.propositionDeReponse = value
         }
         return (
-          <>
-            <label className="intitule">{input.intitule} : </label>
-            <select id="" key={index}>
-              {input.propositionDeReponse.map((lesChoix, index) => (
-                <option value={lesChoix}>{lesChoix}</option>
-              ))}
-            </select>
-          </>
+            <>
+                <div className="col-sm-10 mx-sm-auto">
+                    <label className="intitule">{input.intitule} : </label>
+                    <select  key={index}>
+                        {input.propositionDeReponse.map((lesChoix, index) => (
+                            <option value={lesChoix}>{lesChoix}</option>
+                        ))}
+                    </select>
+                 </div>
+            </>
         );
       case "tableau":
         var convert = input.colonnesTableauInformations + ''
@@ -478,7 +481,9 @@ export default function Data({}) {
         }
         return(
           <>
-            <label className="intitule">{input.intitule} : </label>
+          <div className="col-sm-10 mx-sm-auto ">
+            <label className="intitule mb-3">{input.intitule} : </label>
+            <div className="table-responsive">
             <table className="tableau-appreciation">
               <tr>
                 {input.colonnesTableauInformations.map((criteres) => (
@@ -496,7 +501,9 @@ export default function Data({}) {
                   ))}
                 </tr>
                 ))}
-            </table>
+              </table>
+              </div>
+            </div>
           </>
         );
       case "tableau historique":
@@ -555,50 +562,53 @@ export default function Data({}) {
         }
         return (
           <>
-            <label className="intitule">{input.intitule} : </label>
-            <table className="tableau-appreciation">
-              <tr>
-                  <th></th>
-                  <th>Pas du tout satisfaisant</th>
-                  <th>Peu satisfaisant</th>
-                  <th>Moyennement satisfaisant</th>
-                  <th>Satisfaisant</th>
-                  <th>Très satisfaisant</th>
-              </tr>
-              {input.criteresAppreciation.map((criteres, index) => (
-                  <tr>
-                    <td>{criteres}</td>
-                    <td><input type="radio" value="Pas du tout satisfaisant" name={criteres}/></td>
-                    <td><input type="radio" value="Peu satisfaisant" name={criteres}/></td>
-                    <td><input type="radio" value="Moyennement satisfaisant" name={criteres}/></td>
-                    <td><input type="radio" value="Satisfaisant" name={criteres}/></td>
-                    <td><input type="radio" value="Très satisfaisant" name={criteres}/></td>
-                  </tr>
-                ))}
-            </table>
+                <div className="col-sm-10 mx-sm-auto">
+                    <label className="intitule mb-3">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                        <tr>
+                            <th></th>
+                            <th>Pas du tout satisfaisant</th>
+                            <th>Peu satisfaisant</th>
+                            <th>Moyennement satisfaisant</th>
+                            <th>Satisfaisant</th>
+                            <th>Très satisfaisant</th>
+                        </tr>
+                        {input.criteresAppreciation.map((criteres, index) => (
+                            <tr>
+                                <td>{criteres}</td>
+                                <td><input type="radio" value="Pas du tout satisfaisant" name={criteres} /></td>
+                                <td><input type="radio" value="Peu satisfaisant" name={criteres} /></td>
+                                <td><input type="radio" value="Moyennement satisfaisant" name={criteres} /></td>
+                                <td><input type="radio" value="Satisfaisant" name={criteres} /></td>
+                                <td><input type="radio" value="Très satisfaisant" name={criteres} /></td>
+                            </tr>
+                        ))}
+                    </table>
+                </div>
           </>
         )
       case "notation":
         return (
-          <div>
-             <label className="intitule">{input.intitule} : </label>
-             <table className="tableau-notation">
-              <tr>
-                {[...Array(10)].map((star, i) => (
-                  <>
-                    <th>{i + 1}</th>
-                  </>
-                ))}
-              </tr>
-                {[...Array(10)].map((star, i) => (
-                  <>
-                    <th><input type="radio" value={i} name="note"/></th>
-                  </>
-                ))}
-              <tr>
+            <div className="col-sm-10 mx-sm-auto">
+                <label className="intitule mb-1">{input.intitule} : </label>
+                <table className="tableau-notation">
+                    <tr>
+                        {[...Array(10)].map((star, i) => (
+                            <>
+                                <th>{i + 1}</th>
+                            </>
+                        ))}
+                    </tr>
+                    {[...Array(10)].map((star, i) => (
+                        <>
+                            <th><input type="radio" value={i} name="note" /></th>
+                        </>
+                    ))}
+                    <tr>
 
-              </tr>
-            </table>
+                    </tr>
+                </table>
+                
           </div>
         );
       default:
@@ -614,50 +624,52 @@ export default function Data({}) {
         <div>
           <img className="logo-form" src={logo} alt="logo" />
         </div>
-        <div className="data-block">
-        {dataFeilds.map((feild, index) => {
-          return (
-            <>
-              {dataFeilds.length !== 0 
-                ? 
-                <>
-                  <div className="flexData">
-                    <button className="btn-pos option" onClick={() => { changePosition(dataFeilds, index, feild, type="up");}}>
-                      <Icon.ArrowUpShort />
-                    </button>
-                    <button className="btn-pos option" onClick={() => { changePosition(dataFeilds, index, feild, type="down");}}>
-                      <Icon.ArrowDownShort />
-                    </button>
-                    <button className="btn-remove option" onClick={() => { removeFeild(index, feild.id);}}>
-                      <Icon.Trash />
-                    </button>
-                    <button className="option" onClick={() => { openModal(index)}}>
-                      <Icon.PencilSquare />
-                    </button>
-                    <div className="champs">{renderInput(feild, index)}</div>
+              <div className="data-block">
+                  <div className="allFields">
+                      {dataFeilds.map((feild, index) => {
+                          return (
+                              <>
+                                  {dataFeilds.length !== 0
+                                      ?
+                                      <>
+                                          <div className="flexData">
+                                              <button className="btn-pos option" onClick={() => { changePosition(dataFeilds, index, feild, type = "up"); }}>
+                                                  <Icon.ArrowUpShort />
+                                              </button>
+                                              <button className="btn-pos option" onClick={() => { changePosition(dataFeilds, index, feild, type = "down"); }}>
+                                                  <Icon.ArrowDownShort />
+                                              </button>
+                                              <button className="btn-remove option" onClick={() => { removeFeild(index, feild.id); }}>
+                                                  <Icon.Trash />
+                                              </button>
+                                              <button className="option" onClick={() => { openModal(index) }}>
+                                                  <Icon.PencilSquare />
+                                              </button>
+                                              <div className="champs">{renderInput(feild, index)}</div>
+                                          </div>
+                                      </>
+                                      :
+                                      <></>
+                                  }
+                              </>
+                          );
+                      })}
+
+                      <Button className="btn-new-doc" onClick={openModal}>
+                          <Icon.PlusSquareFill /> Ajouter un Champs
+                      </Button>
+
+                      <Button
+                          className="new-doc-button"
+                          variant="primary"
+                          onClick={handleSubmit}
+                      >
+                          <span>
+                              <Icon.Save />
+                          </span>{" "}
+                          Enregistrer{" "}
+                      </Button>
                   </div>
-                </>
-                : 
-                <></>
-              }
-            </>
-          );
-        })}
-
-        <Button className="btn-new-doc" onClick={openModal}>
-          <Icon.PlusSquareFill /> Ajouter un Champs
-        </Button>
-
-        <Button
-          className="new-doc-button"
-          variant="primary"
-          onClick={handleSubmit}
-        >
-          <span>
-            <Icon.Save />
-          </span>{" "}
-          Enregistrer{" "}
-        </Button>
 
         </div>
 
