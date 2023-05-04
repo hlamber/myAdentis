@@ -64,9 +64,9 @@ export default function DetailModal({isShowing, id, hide, title, type}) {
                         <div className='header-modal'>
                             <h2>Nom du document</h2><Button className='icon icon-delete' type="button" onClick={() => suppDocument()}><Icon.Trash/></Button>
                         </div>
-                        <div className='row-modal'>
-                            <input type="text" className='title-modal' defaultValue={title} ref={titleRef}></input>
-                        </div>
+                        {/*<div className='row-modal'>*/}
+                        {/*    <input type="text" className='title-modal' defaultValue={title} ref={titleRef}></input>*/}
+                        {/*</div>*/}
                         <div className='row-modal'>
                             <label>Type</label>
                             <select defaultValue={type} ref={typeRef}>

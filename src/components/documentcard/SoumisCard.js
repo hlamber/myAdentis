@@ -19,7 +19,7 @@ export default function SoumisCard({id, title, type, prenom, date}) {
                     <footer className="blockquote-footer" >
                         Soumis le : <cite title="Source Title">{date}</cite>
                         {infoUser.role >= 1 
-                            ? <Button className='icon' type="button" onClick={() => window.location.href=`/editDoc/${id}` }><Icon.PencilSquare/></Button>
+                            ? <Button className='icon' title="Modifier le document" type="button" onClick={() => window.location.href=`/editDoc/${id}` }><Icon.PencilSquare/></Button>
                             : <></>
                         }
                     </footer>

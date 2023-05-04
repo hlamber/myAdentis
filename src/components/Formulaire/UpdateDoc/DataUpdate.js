@@ -242,189 +242,198 @@ export default function DataUpdateData({data}) {
     // affichage des champs
     const renderInput = (input, index, defaultRes) => {
         switch (input.type) {
-        case "section":
-            return <h1 className="section" key={index}>{input.intitule} </h1>;
-        case "sous section":
-            return <h2 className="sous-section" key={index}>{input.intitule} </h2>;
-        case "texte simple":
-            return (
-            <div key={index}>
-                <label className="intitule">{input.intitule} </label>
-                {input.estObligatoire
-                    ? <input type={input.type} defaultValue={defaultRes} onChange={(e) => { handleChange(index, e.target.value)}} size="40" required/>
-                    : <input type={input.type} defaultValue={defaultRes} onChange={(e) => { handleChange(index, e.target.value)}} size="40"/>
-                }
-            </div>
-            );
-        case "texte long":
-            return (
-            <div className="textarea" key={index}>
-                <label className="intitule">{input.intitule}</label>
-                <textarea defaultValue={defaultRes} rows="3" onChange={(e) => { handleChange(index, e.target.value)}}></textarea>
-            </div>
-            );
-        case "choix multiples":
-            var res = ""
-            if(defaultRes !== undefined){
-                res = defaultRes + ''
-            }
-            var convertRes = res.split("-")
-
-            var convert = input.propositionDeReponse + ''
-            var value = convert.split("-")
-            if(value.length > 1){
-            input.propositionDeReponse = value
-            }
-            return (
-            <div key={index}>
-                <label>{input.intitule} : </label>
-                {input.propositionDeReponse.map((valeur, i) => (
-                <label>
-                    {convertRes.includes(valeur) && convertRes !== undefined
-                        ? <input type="checkbox" defaultChecked onChange={(e) => { handleChange(index, valeur, e.target.checked)}}/>
-                        : <input type="checkbox" onChange={(e) => { handleChange(index, valeur, e.target.checked)}}/>
+            case "section":
+                return <h1 className="section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h1>;
+                case "sous section":
+                return <h2 className="sous-section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
+            case "texte simple":
+                return (
+                    <div className="col-sm-10 mx-sm-auto" key={index}>
+                    <label className="intitule">{input.intitule} </label>
+                    {input.estObligatoire
+                        ? <input type={input.type} defaultValue={defaultRes} onChange={(e) => { handleChange(index, e.target.value)}} size="40" required/>
+                        : <input type={input.type} defaultValue={defaultRes} onChange={(e) => { handleChange(index, e.target.value)}} size="40"/>
                     }
-                    {valeur}
-                </label>
-                ))}
-            </div>
-            );
-        case "choix simple":
-            var convert = input.propositionDeReponse + ''
-            var value = convert.split("-")
-            if(value.length > 1){
-            input.propositionDeReponse = value
-            }
-            return (
-            <>
-                <label className="intitule">{input.intitule} : </label>
-                <select id="" key={index} onChange={(e) => { handleChange(index, e.target.value)}}>
-                    <option></option>
-                {input.propositionDeReponse.map((lesChoix, index) => (
-                    <>
-                    {lesChoix === defaultRes
-                        ? <option selected="selected" value={lesChoix}>{lesChoix}</option>
-                        : <option value={lesChoix}>{lesChoix}</option>
+                </div>
+                );
+            case "texte long":
+                return ( 
+                    <div className="textarea col-sm-10 mx-sm-auto" key={index}>
+                    <label className="intitule">{input.intitule}</label>
+                    <textarea defaultValue={defaultRes} rows="3" onChange={(e) => { handleChange(index, e.target.value)}}></textarea>
+                </div>
+                );
+            case "choix multiples":
+                var res = ""
+                if(defaultRes !== undefined){
+                    res = defaultRes + ''
+                }
+                var convertRes = res.split("-")
+
+                var convert = input.propositionDeReponse + ''
+                var value = convert.split("-")
+                if(value.length > 1){
+                input.propositionDeReponse = value
+                }
+                return (
+                <div className="col-sm-10 mx-sm-auto" key={index}>
+                    <label>{input.intitule} : </label>
+                    {input.propositionDeReponse.map((valeur, i) => (
+                    <label>
+                        {convertRes.includes(valeur) && convertRes !== undefined
+                            ? <input type="checkbox" defaultChecked onChange={(e) => { handleChange(index, valeur, e.target.checked)}}/>
+                            : <input type="checkbox" onChange={(e) => { handleChange(index, valeur, e.target.checked)}}/>
                         }
+                        {valeur}
+                    </label>
+                    ))}
+                </div>
+                );
+            case "choix simple":
+                var convert = input.propositionDeReponse + ''
+                var value = convert.split("-")
+                if(value.length > 1){
+                input.propositionDeReponse = value
+                }
+                return (
+                    <>
+                        <div className="col-sm-10 mx-sm-auto">
+                            <label className="intitule">{input.intitule} : </label>
+                            <select id="" key={index} onChange={(e) => { handleChange(index, e.target.value) }}>
+                                <option></option>
+                                {input.propositionDeReponse.map((lesChoix, index) => (
+                                    <>
+                                        {lesChoix === defaultRes
+                                            ? <option selected="selected" value={lesChoix}>{lesChoix}</option>
+                                            : <option value={lesChoix}>{lesChoix}</option>
+                                        }
+                                    </>
+                                ))}
+                            </select>
+                        </div>
                     </>
-                ))}
-                </select>
-            </>
-            );
-        case "tableau":
-            var res = ""
-            if(defaultRes !== undefined){
-                res = defaultRes
-            }
-            var convertRes = res.split(";").map(pair => pair.split("-")); 
+                );
+            case "tableau":
+                var res = ""
+                if(defaultRes !== undefined){
+                    res = defaultRes
+                }
+                var convertRes = res.split(";").map(pair => pair.split("-")); 
 
-            var convert = input.colonnesTableauInformations + ''
-            var value = convert.split("-")
-            if(value.length > 1){
-                input.colonnesTableauInformations = value
-            }
-            return(
-                <>
-                    <label className="intitule">{input.intitule} : </label>
-                    <table className="tableau-appreciation">
-                      <tr>
-                        {input.colonnesTableauInformations.map((criteres) => (
-                          <>
-                            <th>{criteres}</th>
-                          </>
-                        ))}
-                      </tr>
-                      {[...Array(3)].map((row, numRow) => (
-                        <tr>
-                          {input.colonnesTableauInformations.map((col, numCol) => (
-                            <>
-                                <th>
-                                    {convertRes.find(r => r.length !== 1 )
-                                        ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
-                                        : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
-                                    }
-                                </th>
-                            </>
-                          ))}
-                        </tr>
-                        ))}
-                    </table>
-                </>
-            );
-        case "tableau d'appreciation":
-            var res = ""
-            if(defaultRes !== undefined){
-                res = defaultRes + ''
-            }
-            var convertRes = res.split("-").map(pair => pair.split(":")); 
-            if(convertRes.slice(-1)[0] === ""){
-                convertRes.pop()
-            }
+                var convert = input.colonnesTableauInformations + ''
+                var value = convert.split("-")
+                if(value.length > 1){
+                    input.colonnesTableauInformations = value
+                }
+                return(
+                    <>
+                        <div className="col-sm-10 mx-sm-auto ">
+                            <label className="intitule mb-3">{input.intitule} : </label>
+                            <div className="table-responsive">
+                                <table className="tableau-appreciation">
+                                    <tr>
+                                        {input.colonnesTableauInformations.map((criteres) => (
+                                            <>
+                                                <th>{criteres}</th>
+                                            </>
+                                        ))}
+                                    </tr>
+                                    {[...Array(3)].map((row, numRow) => (
+                                        <tr>
+                                            {input.colonnesTableauInformations.map((col, numCol) => (
+                                                <>
+                                                    <th>
+                                                        {convertRes.find(r => r.length !== 1)
+                                                            ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length) }} />
+                                                            : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length) }} />
+                                                        }
+                                                    </th>
+                                                </>
+                                            ))}
+                                        </tr>
+                                    ))}
+                                </table>
+                            </div>
+                        </div>
+                    </>
+                );
+            case "tableau d'appreciation":
+                var res = ""
+                if(defaultRes !== undefined){
+                    res = defaultRes + ''
+                }
+                var convertRes = res.split("-").map(pair => pair.split(":")); 
+                if(convertRes.slice(-1)[0] === ""){
+                    convertRes.pop()
+                }
 
-            var convert = input.criteresAppreciation + ''
-            var value = convert.split("-")
-            if(value.length > 1){
-              input.criteresAppreciation = value
-            }
-            return (
-              <>
-                <label className="intitule">{input.intitule} : </label>
-                <table className="tableau-appreciation">
-                  <tr>
-                      <th></th>
-                      {propAppreciation.map((prop) => (
-                        <><th>{prop}</th></>
-                      ))}
-                  </tr>
-                 
-
-                            {input.criteresAppreciation.map((criteres) => (
+                var convert = input.criteresAppreciation + ''
+                var value = convert.split("-")
+                if(value.length > 1){
+                  input.criteresAppreciation = value
+                }
+                return (
+                    <>
+                        <div className="col-sm-10 mx-sm-auto">
+                            <label className="intitule mb-3">{input.intitule} : </label>
+                            <table className="tableau-appreciation">
                                 <tr>
-                                    <td>{criteres}</td>
+                                    <th></th>
                                     {propAppreciation.map((prop) => (
-                                        <>
-                                            {convertRes.find(r => r[0] === criteres && r[1] === prop )
-                                                ? <td><input type="radio" value={prop} name={criteres} defaultChecked onChange={(e) => { handleChange(index, e.target)}}/></td>
-                                                : <td><input type="radio" value={prop} name={criteres} onChange={(e) => { handleChange(index, e.target)}}/></td>
-                                            }
-                                        </>
+                                        <><th>{prop}</th></>
                                     ))}
                                 </tr>
-                            ))}
-                        
-                  
-                </table>
-              </>
-            );
-        case "notation":
-            return (
-                <div>
-                <label className="intitule">{input.intitule} : </label>
-                <table className="tableau-notation">
-                 <tr>
-                   {[...Array(10)].map((star, i) => (
-                     <>
-                       <th>{i + 1}</th>
-                     </>
-                   ))}
-                 </tr>
-                   {[...Array(10)].map((star, i) => (
-                     <>
-                        {i + 1 === Number(defaultRes)
-                            ? <th><input type="radio" defaultChecked value={i} name={input.intitule} onChange={(e) => { handleChange(index, e.target.value)}}/></th>
-                            : <th><input type="radio" value={i} name={input.intitule} onChange={(e) => { handleChange(index, e.target.value)}}/></th>
-                        }
+
+
+                                {input.criteresAppreciation.map((criteres) => (
+                                    <tr>
+                                        <td>{criteres}</td>
+                                        {propAppreciation.map((prop) => (
+                                            <>
+                                                {convertRes.find(r => r[0] === criteres && r[1] === prop)
+                                                    ? <td><input type="radio" value={prop} name={criteres} defaultChecked onChange={(e) => { handleChange(index, e.target) }} /></td>
+                                                    : <td><input type="radio" value={prop} name={criteres} onChange={(e) => { handleChange(index, e.target) }} /></td>
+                                                }
+                                            </>
+                                        ))}
+                                    </tr>
+                                ))}
+
+
+                            </table>
+                        </div>
+                       
+                  </>
+                );
+            case "notation":
+                return (
+                    <div className="col-sm-10 mx-sm-auto">
+                        <label className="intitule mb-1">{input.intitule} : </label>
+                        <table className="tableau-notation">
+                             <tr>
+                               {[...Array(10)].map((star, i) => (
+                                 <>
+                                   <th>{i + 1}</th>
+                                 </>
+                               ))}
+                             </tr>
+                           {[...Array(10)].map((star, i) => (
+                             <>
+                                {i + 1 === Number(defaultRes)
+                                    ? <th><input type="radio" defaultChecked value={i} name={input.intitule} onChange={(e) => { handleChange(index, e.target.value)}}/></th>
+                                    : <th><input type="radio" value={i} name={input.intitule} onChange={(e) => { handleChange(index, e.target.value)}}/></th>
+                                }
                             
-                     </>
-                   ))}
-                 <tr>
+                             </>
+                           ))}
+                             <tr>
    
-                 </tr>
-               </table>
-             </div>
-            );
-        default:
-            return <> </>;
+                             </tr>
+                       </table>
+                 </div>
+                );
+            default:
+                return <> </>;
         }
     };
 

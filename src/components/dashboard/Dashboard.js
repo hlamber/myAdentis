@@ -173,11 +173,12 @@ export default function Dashboard() {
             ? <h1>Documents envoyés</h1>
             : <h1>Documents à soumettre</h1>
           }
+                 
           <div className="filter">
               <span>
                 <Icon.FilterCircleFill className="icon-filter"/>
               </span>{" "}
-              <select
+              <select className
                 onChange={handleSlugChange}
               >                
                 <option value="">All</option>

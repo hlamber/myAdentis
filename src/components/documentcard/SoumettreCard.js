@@ -37,17 +37,17 @@ export default function SoumettreCard({id, title, type, prenom, date, toUser}) {
         <Card style={{ maxWidth: "400px" }}>
             <Card.Header><strong>{type}</strong></Card.Header>
             <Card.Body>
-                <blockquote className="blockquote mb-0" style={{ fontSize: "1em" }}>
+                <blockquote className="blockquote mb-0" style={{ fontSize: "93%" }}>
                 <p>{title}</p>
                 <h4>{prenom}</h4>
                 <footer className="blockquote-footer" >
                     Date limite :  <cite title="Source Title">{date}</cite>
                     {infoUser.role >= 1 
                         ? 
-                            <Button className='icon icon-relance' type="button" onClick={() => sendEmail() }><Icon.ArrowRepeat/></Button>
+                            <Button className='icon icon-relance' title="Relancer" type="button" onClick={() => sendEmail() }><Icon.ArrowRepeat/></Button>
                         : <></>
-                    }
-                    <Button className='icon' type="button" onClick={() => window.location.href=`/editDoc/${id}` }><Icon.PencilSquare/></Button>
+                          }
+                          <Button className='icon' type="button" title="Modifier le document" onClick={() => window.location.href = `/editDoc/${id}`}><Icon.PencilSquare /></Button>
                 </footer>
                 </blockquote>
             </Card.Body>
