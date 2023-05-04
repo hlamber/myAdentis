@@ -22,6 +22,8 @@ export default function DataUpdateData({data}) {
     const [find2, setFind2] = useState(false)
     var { id } = useParams()
     var propAppreciation = ["Pas du tout satisfaisant", "Peu satisfaisant", "Moyennement satisfaisant", "Satisfaisant", "Très satisfaisant"]
+    var tabHistorique = ["Client", "Poste", "Débuté il y a combien de mois (chiffre uniquement)", "Durée en mois (chiffre uniquement)"]
+    var tabProjet = ["Client", "Durée", "Missions réalisées", "Comment as-tu perçu cette expérience ?"]
     var action = ""
     let MathScore = [];
 
@@ -61,6 +63,10 @@ export default function DataUpdateData({data}) {
         var d = new Date()
         var date = d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()+"T"+d.getHours() + ":" + d.getMinutes() + ":" + d.getSeconds();
 
+        //TODO parcourir uniquement les champs créés ou modifiés temps de chargement trop long
+
+        console.log(defaultRes)
+
         for(var r in defaultRes){
 
             var missingElement1 = defaultRes[r].soumission.document.champs
@@ -73,7 +79,6 @@ export default function DataUpdateData({data}) {
             }
 
             if(defaultRes[r].id === undefined){
-                console.log('bjkbjkkjk')
                 if(defaultRes[r].champ.type === "choix multiples" || defaultRes[r].champ.type === "choix simple"){
                     var convert = defaultRes[r].champ.propositionDeReponse
                     defaultRes[r].champ.propositionDeReponse = convert.join("-")
@@ -86,20 +91,23 @@ export default function DataUpdateData({data}) {
                     }
                     defaultRes[r].intitule = convert
                 }
-                if(defaultRes[r].champ.type === "tableau"){
-                    var convert = ""
-                    var convert2 = ""
-                    for(var t in defaultRes[r].intitule){
-                        convert = defaultRes[r].intitule[t].join('-')
-                        defaultRes[r].intitule[t] = convert
+                if(defaultRes[r].champ.type === "tableau" || defaultRes[r].champ.type === "tableau historique" || defaultRes[r].champ.type === "tableau projet"){
+
+                    if(typeof defaultRes[r].intitule === "object"){
+                        var convert = ""
+                        var convert2 = ""
+                        for(var t in defaultRes[r].intitule){
+                            convert = defaultRes[r].intitule[t].join('-')
+                            defaultRes[r].intitule[t] = convert
+                        }
+                        convert2 = defaultRes[r].intitule.join(";")
+                        defaultRes[r].intitule = convert2
                     }
-                    convert2 = defaultRes[r].intitule.join(";")
-                    defaultRes[r].intitule = convert2
                 }
                 await createReponse(defaultRes[r])
             }
             else {
-                if(defaultRes[r].champ.type === "tableau"){
+                if(defaultRes[r].champ.type === "tableau" || defaultRes[r].champ.type === "tableau historique" || defaultRes[r].champ.type === "tableau projet"){
                     if(typeof defaultRes[r].intitule === "object"){
                         var convert = ""
                         var convert2 = ""
@@ -119,12 +127,13 @@ export default function DataUpdateData({data}) {
             data.dateDeSoumission = date
             await updateSoumission(data, id)
         }
-        // window.location.href="/"
+        window.location.href="/"
     }
 
     async function handleChange(index, value, isCheck, numRow, numCol, tabLength){
 
         const result = defaultRes
+        var nbRow = 0
         
         for(var c in dataFeilds ){
             dataFeilds[c].document = {}   
@@ -151,16 +160,26 @@ export default function DataUpdateData({data}) {
                 newVal.intitule = []
                 newVal.intitule[value.name] = value.value
             }
-            if(dataFeilds[index].type === "tableau"){
-                newVal.intitule = new Array(3)
-                for (i=0; i < 3; i++){
+            if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){
+                switch (dataFeilds[index].type) {
+                    case "tableau":
+                    case "tableau projet":
+                        newVal.intitule = new Array(3)
+                        nbRow = 3
+                        break;
+                    case "tableau historique":
+                        newVal.intitule = new Array(4)
+                        nbRow = 4
+                        break;
+                }
+                for (i=0; i < nbRow; i++){
                     var myArray = new Array(tabLength)
                     for(t=0; t < tabLength; t++){
                         myArray[t] = ""
                     }
                     newVal.intitule[i] = myArray
                 }
-                newVal.intitule[numRow][numCol-1] = value
+                newVal.intitule[numRow][numCol] = value
             }
             defaultRes.push(newVal)
         } 
@@ -171,9 +190,19 @@ export default function DataUpdateData({data}) {
                     newVal.intitule = []
                     newVal.intitule[value.name] = value.value
                 }
-                if(dataFeilds[index].type === "tableau"){
-                    newVal.intitule = new Array(3)
-                    for (var i=0; i < 3; i++){
+                if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){
+                    switch (dataFeilds[index].type) {
+                        case "tableau":
+                        case "tableau projet":
+                            newVal.intitule = new Array(3)
+                            nbRow = 3
+                            break;
+                        case "tableau historique":
+                            newVal.intitule = new Array(4)
+                            nbRow = 4
+                            break;
+                    }
+                    for (var i=0; i < nbRow; i++){
                         var myArray = new Array(tabLength)
                         for(t=0; t < tabLength; t++){
                             myArray[t] = ""
@@ -197,8 +226,7 @@ export default function DataUpdateData({data}) {
                         defaultRes[objIndex].intitule = defaultRes[objIndex].intitule + "-" + value
                     }
                 }
-                else if(dataFeilds[index].type === "tableau"){ 
-                    console.log(typeof defaultRes[objIndex].intitule)  
+                else if(dataFeilds[index].type === "tableau" || dataFeilds[index].type === "tableau historique" || dataFeilds[index].type === "tableau projet"){ 
                     if(typeof defaultRes[objIndex].intitule === "object"){
                         defaultRes[objIndex].intitule[numRow][numCol] = value
                     } 
@@ -206,8 +234,6 @@ export default function DataUpdateData({data}) {
                         var convertRes = defaultRes[objIndex].intitule.split(";").map(pair => pair.split("-")); 
                         defaultRes[objIndex].intitule = convertRes
                     }
-                    // console.log(defaultRes[objIndex].intitule) 
-                    // defaultRes[objIndex].intitule[numRow][numCol] = value
                 }
                 else if(dataFeilds[index].type === "tableau d'appreciation"){
                     if(typeof defaultRes[objIndex].intitule === "object"){
@@ -236,7 +262,6 @@ export default function DataUpdateData({data}) {
                 }
             }   
         }
-        console.log(defaultRes)
     }
        
     // affichage des champs
@@ -244,8 +269,10 @@ export default function DataUpdateData({data}) {
         switch (input.type) {
             case "section":
                 return <h1 className="section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h1>;
-                case "sous section":
+            case "sous section":
                 return <h2 className="sous-section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
+            case "indication":
+                return <h2 className="indication col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
             case "texte simple":
                 return (
                     <div className="col-sm-10 mx-sm-auto" key={index}>
@@ -312,14 +339,127 @@ export default function DataUpdateData({data}) {
                             </select>
                         </div>
                     </>
-                );
-            case "tableau":
-                var res = ""
-                if(defaultRes !== undefined){
-                    res = defaultRes
-                }
-                var convertRes = res.split(";").map(pair => pair.split("-")); 
+                ))}
+                </select>
+            </>
+            );
+        case "tableau":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes
+            }
+            var convertRes = res.split(";").map(pair => pair.split("-")); 
 
+            var convert = input.colonnesTableauInformations + ''
+            var value = convert.split("-")
+            if(value.length > 1){
+                input.colonnesTableauInformations = value
+            }
+            return(
+                <>
+                    <label className="intitule">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                      <tr>
+                        {input.colonnesTableauInformations.map((criteres) => (
+                          <>
+                            <th>{criteres}</th>
+                          </>
+                        ))}
+                      </tr>
+                      {[...Array(3)].map((row, numRow) => (
+                        <tr>
+                          {input.colonnesTableauInformations.map((col, numCol) => (
+                            <>
+                                <th>
+                                    {convertRes.find(r => r.length !== 1 )
+                                        ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                        : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                    }
+                                </th>
+                            </>
+                          ))}
+                        </tr>
+                        ))}
+                    </table>
+                </>
+            );
+        case "tableau historique":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes
+            }
+            var convertRes = res.split(";").map(pair => pair.split("-")); 
+            return(
+                <>
+                    <label className="intitule">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                        <tr>
+                            {tabHistorique.map((criteres) => (
+                                <>
+                                    <th>{criteres}</th>
+                                </>
+                            ))}
+                        </tr>
+                        {[...Array(4)].map((row, numRow) => (
+                            <tr>
+                                {tabHistorique.map((col, numCol) => (
+                                    <>
+                                        <th>
+                                            {convertRes.find(r => r.length !== 1 )
+                                                ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                                : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, tabHistorique.length)}}/>
+                                            }
+                                        </th>
+                                    </>
+                                ))}
+                            </tr>
+                        ))}
+                    </table>
+                </>
+            );
+        case "tableau projet":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes
+            }
+            var convertRes = res.split(";").map(pair => pair.split("-")); 
+            return(
+                <>
+                    <label className="intitule">{input.intitule} : </label>
+                    <table className="tableau-appreciation">
+                        <tr>
+                            {tabProjet.map((criteres) => (
+                                <>
+                                    <th>{criteres}</th>
+                                </>
+                            ))}
+                        </tr>
+                        {[...Array(3)].map((row, numRow) => (
+                            <tr>
+                                {tabProjet.map((col, numCol) => (
+                                    <>
+                                        <th>
+                                            {convertRes.find(r => r.length !== 1 )
+                                                ? <input type="text" defaultValue={convertRes[numRow][numCol]} onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, input.colonnesTableauInformations.length)}}/>
+                                                : <input type="text" onChange={(e) => { handleChange(index, e.target.value, e.target.checked, numRow, numCol, tabProjet.length)}}/>
+                                            }
+                                        </th>
+                                    </>
+                                ))}
+                            </tr>
+                        ))}
+                    </table>
+                </>
+            );
+        case "tableau d'appreciation":
+            var res = ""
+            if(defaultRes !== undefined){
+                res = defaultRes + ''
+            }
+            var convertRes = res.split("-").map(pair => pair.split(":")); 
+            if(convertRes.slice(-1)[0] === ""){
+                convertRes.pop()
+            }
                 var convert = input.colonnesTableauInformations + ''
                 var value = convert.split("-")
                 if(value.length > 1){

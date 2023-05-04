@@ -37,84 +37,36 @@ const styles = StyleSheet.create({
       },
   });
 
-export default function TableFormation({data, reponses}) {
+export default function TableFormation({data, res}) {
 
-    var tab1 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Formation 1")) + 1, data.indexOf(data.find((rep) => rep.intitule === "Formation 2")))
-    var tab2 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Formation 2")) + 1, data.indexOf(data.find((rep) => rep.intitule === "Formation 3")))
-    var tab3 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Formation 3")) + 1, data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")))
-
-    var tab4 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 2, data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 4)
-    var tab5 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 5, data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 7)
-    var tab6 = data.slice(data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 8, data.indexOf(data.find((rep) => rep.intitule === "Quelles formations t'intéressent ?")) + 10)
-
-    var infoTab = ["Formations","Date de la formation","Certifications"]
-    var infoTab2 = ["Formations","Certifications"]
-
+    var convertRes = ""
+    if(res !== undefined){
+      convertRes = res.intitule.split(";").map(pair => pair.split("-")); 
+    }
+    
     return (
         <>
         <View style={styles.table}>
             <View style={[styles.row, styles.table_title]}>
-                {infoTab.map((app, i) => (
+                {data.map((app, i) => (
                     <>
                         <Text style={styles.row1}>{app}</Text>
                     </>
                 ))}
             </View>
-            <View style={styles.row} wrap={false}>
-                {tab1.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
-            <View style={styles.row} wrap={false}>
-                {tab2.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
-            <View style={styles.row} wrap={false}>
-                {tab3.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
-        </View>
-
-        <Text style={styles.sousSection}>Quelles formations t'intéressent ?</Text>
-        <Text>{"\n"}</Text>
-
-        <View style={styles.table}>
-            <View style={[styles.row, styles.table_title]}>
-                {infoTab2.map((app, i) => (
-                    <>
-                        <Text style={styles.row1}>{app}</Text>
-                    </>
-                ))}
-            </View>
-            <View style={styles.row} wrap={false}>
-                {tab4.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
-            <View style={styles.row} wrap={false}>
-                {tab5.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
-            <View style={styles.row} wrap={false}>
-                {tab6.map((app, i) => (
-                    <>           
-                        <Text style={styles.row1}>{reponses.find(r => r.positionChamp === app.position).intitule}</Text>     
-                    </>
-                ))}
-            </View>
+            {[...Array(3)].map((row, numRow) => (
+                <View style={styles.row} wrap={false}>
+                    {[...Array(data.length)].map((col, numCol) => (
+                        <>
+                            {convertRes.length !== 1 && convertRes.length !== 0
+                              ? <Text style={styles.row1}>{convertRes[numRow][numCol]}</Text>
+                              : <Text style={styles.row1}></Text>
+                            }
+                            
+                        </>
+                    ))}
+                </View>
+             ))}
         </View>
         </>
     )

@@ -23,12 +23,11 @@ export default function Data({}) {
   var [selectedChamp, setSelectedChamp] = useState();
   var [changedChamp, setChangedChamp] = useState([])
 
-  //pour les note en etoile
-  const [rating, setRating] = useState(0);
-  //-----------------------
-  const [estAfficher, setEstAfficher] = useState(false);
+
   const [find, setFind] = useState(false);
   var type=""
+  var tabHistorique = ["Client", "Poste", "Débuté il y a combien de mois (chiffre uniquement)", "Durée en mois (chiffre uniquement)"]
+  var tabProjet = ["Client", "Durée", "Missions réalisées", "Comment as-tu perçu cette expérience ?"]
 
   useEffect(() => {
     checkDoc();
@@ -419,6 +418,8 @@ export default function Data({}) {
             return <h1 className="section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h1>;
         case "sous section":
             return <h2 className="sous-section col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
+        case "indication":
+            return <h2 className="indication col-sm-10 mx-sm-auto" key={index}>{input.intitule} </h2>;
       case "texte simple":
         return (
             <div className="col-sm-10 mx-sm-auto" key={index}>
@@ -479,40 +480,19 @@ export default function Data({}) {
           input.colonnesTableauInformations = value
         }
         return(
-            <>
-                <div className="col-sm-10 mx-sm-auto ">
-                    <label className="intitule  mb-3">{input.intitule} : </label>
-                    <div className="table-responsive">
-                        <table className="tableau-appreciation">
-                            <tr>
-                                {input.colonnesTableauInformations.map((criteres) => (
-                                    <>
-                                        <th>{criteres}</th>
-                                    </>
-                                ))}
-                            </tr>
-                            <tr>
-                                {input.colonnesTableauInformations.map(() => (
-                                    <>
-                                        <th><input type="text" /></th>
-                                    </>
-                                ))}
-                            </tr>
-                            <tr>
-                                {input.colonnesTableauInformations.map(() => (
-                                    <>
-                                        <th><input type="text" /></th>
-                                    </>
-                                ))}
-                            </tr>
-                            <tr>
-                                {input.colonnesTableauInformations.map(() => (
-                                    <>
-                                        <th><input type="text" /></th>
-                                    </>
-                                ))}
-                            </tr>
-                            {/* {[...Array(Number(input.nbRow))].map(() => (
+          <>
+          <div className="col-sm-10 mx-sm-auto ">
+            <label className="intitule mb-3">{input.intitule} : </label>
+            <div className="table-responsive">
+            <table className="tableau-appreciation">
+              <tr>
+                {input.colonnesTableauInformations.map((criteres) => (
+                  <>
+                    <th>{criteres}</th>
+                  </>
+                ))}
+              </tr>
+              {[...Array(3)].map(() => (
                 <tr>
                   {input.colonnesTableauInformations.map(() => (
                     <>
@@ -520,11 +500,58 @@ export default function Data({}) {
                     </>
                   ))}
                 </tr>
-                ))} */}
-                        </table>
-                    </div>
-                  
-                </div>
+                ))}
+              </table>
+              </div>
+            </div>
+          </>
+        );
+      case "tableau historique":
+        return(
+          <>
+            <label className="intitule">{input.intitule} : </label>
+            <table className="tableau-appreciation">
+              <tr>
+                {tabHistorique.map((criteres) => (
+                  <>
+                    <th>{criteres}</th>
+                  </>
+                ))}
+              </tr>
+              {[...Array(4)].map(() => (
+                <tr>
+                  {tabHistorique.map(() => (
+                    <>
+                      <th><input type="text"/></th>
+                    </>
+                  ))}
+                </tr>
+                ))}
+            </table>
+          </>
+        );
+      case "tableau projet":
+        return(
+          <>
+            <label className="intitule">{input.intitule} : </label>
+            <table className="tableau-appreciation">
+              <tr>
+                {tabProjet.map((criteres) => (
+                  <>
+                    <th>{criteres}</th>
+                  </>
+                ))}
+              </tr>
+              {[...Array(3)].map(() => (
+                <tr>
+                  {tabProjet.map(() => (
+                    <>
+                      <th><input type="text"/></th>
+                    </>
+                  ))}
+                </tr>
+                ))}
+            </table>
           </>
         );
       case "tableau d'appreciation":

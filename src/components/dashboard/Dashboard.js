@@ -2,9 +2,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Button } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { useAuth } from "../../hooks/AuthContext";
-import DocumentCard from "../documentcard/DocumentCard";
-import SoumettreCard from "../documentcard/SoumettreCard";
-import SoumisCard from "../documentcard/SoumisCard";
 import Header from "../header/Header";
 import { useSelector } from "react-redux";
 import "./dashboard.css";
@@ -37,7 +34,7 @@ export default function Dashboard() {
   var filteredList3 = useMemo(getFilteredSlug2, [selectedSlug, soumissions]);
     
   useEffect(() => {
-
+ 
     if(!once){
       if (insertSuccess === "1") {
         const msg = sessionStorage.getItem("successMessage");
@@ -187,7 +184,7 @@ export default function Dashboard() {
                 <option value="suivi-integration-6-mois">Suivi d’intégration à 6 mois</option>
                 <option value="pap">Point Avancement Projet (PAP)</option>
                 <option value="pmp">Point Mensuel Projet (PMP)</option>
-                <option value="bilan-professionnel">Bilan professionnel</option>
+                <option value="fessionnel">Bilan professionnel</option>
                 <option value="bilan-annuel">Bilan annuel</option>
                 <option value="bilan-intermediaire">Bilan intermédiaire</option>
                 </select>

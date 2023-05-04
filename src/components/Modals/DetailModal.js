@@ -23,7 +23,6 @@ export default function DetailModal({isShowing, id, hide, title, type}) {
     }
 
     function changesDocument(){
-      console.log(slugRef.current.value)
         const json_load = {
           id: id,
           type: typeRef.current.value,
