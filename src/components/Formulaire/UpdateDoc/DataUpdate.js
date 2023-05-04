@@ -286,7 +286,7 @@ export default function DataUpdateData({data}) {
             case "texte long":
                 return ( 
                     <div className="textarea col-sm-10 mx-sm-auto" key={index}>
-                    <label className="intitule">{input.intitule}</label>
+                    <label className="intitule mb-1">{input.intitule}</label>
                     <textarea defaultValue={defaultRes} rows="3" onChange={(e) => { handleChange(index, e.target.value)}}></textarea>
                 </div>
                 );
@@ -323,7 +323,6 @@ export default function DataUpdateData({data}) {
                 input.propositionDeReponse = value
                 }
                 return (
-                    <>
                         <div className="col-sm-10 mx-sm-auto">
                             <label className="intitule">{input.intitule} : </label>
                             <select id="" key={index} onChange={(e) => { handleChange(index, e.target.value) }}>
@@ -338,10 +337,6 @@ export default function DataUpdateData({data}) {
                                 ))}
                             </select>
                         </div>
-                    </>
-                ))}
-                </select>
-            </>
             );
         case "tableau":
             var res = ""
