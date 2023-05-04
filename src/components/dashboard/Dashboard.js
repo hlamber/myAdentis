@@ -34,7 +34,7 @@ export default function Dashboard() {
   var filteredList3 = useMemo(getFilteredSlug2, [selectedSlug, soumissions]);
     
   useEffect(() => {
-
+ 
     if(!once){
       if (insertSuccess === "1") {
         const msg = sessionStorage.getItem("successMessage");
